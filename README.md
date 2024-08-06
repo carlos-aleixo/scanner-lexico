@@ -1,4 +1,2 @@
-# analisador-lexico
-Analisador léxico elaborado para a matéria de Linguagens Formais. O programa recebe um arquivo e baseado num alfabeto pré-definido, identifica se todos os tokens presentes no arquivo estão dentro do alfabeto.
-
-Alunos: Anne Ingrid, Carlos Eduardo Aleixo e Henrique Crispin
+Analisador Léxico em Python
+Este projeto implementa um analisador léxico em Python para identificar tokens como números, identificadores, operadores, strings, espaços e linhas em arquivos de código-fonte. Além disso, cria uma tabela de símbolos para identificadores e números. Útil para a construção de compiladores e interpretadores.
