@@ -4,7 +4,9 @@ reservadas = {'while', 'do'}
 
 def analisador_lexico(conteudo):
     lista_token = [
-        ('Identificador', r'[A-Za-z_]\w*'),
+        ('Identificador', r'[ij]'),
+        ('Reservado', r'\b(?:while|do)\b'),
+        ('Constante', r'\d{2,}'),
         ('Operador', r'[+\-*/%&|^!~<>=]'),
         ('Numero', r'\d+(\.\d*)?'),
         ('String', r'\".*?\"'),
@@ -33,13 +35,13 @@ def analisador_lexico(conteudo):
         elif tipo == 'Outros':
             return False, valor
         else:
-            if tipo == 'Identificador' and valor in reservadas:
-                tipo = 'Reservado'
+            if tipo == 'Reservado':
+                pass
             elif tipo == 'Identificador':
                 if valor not in tabela_simbolos:
                     tabela_simbolos[valor] = index
                     index += 1
-            elif tipo == 'Numero':
+            elif tipo == 'Numero' or tipo == 'Constante':
                 if valor not in tabela_simbolos:
                     tabela_simbolos[valor] = index
                     index += 1
@@ -58,9 +60,10 @@ def main():
     nome = input("Digite o nome do arquivo a ser analisado: ")
     parametro = arquivo(nome)
 
-    passou, tokens, tabela_simbolos = analisador_lexico(parametro)
+    resultado = analisador_lexico(parametro)
 
-    if passou:
+    if resultado[0]:
+        _, tokens, tabela_simbolos = resultado
         print("Tabela de Tokens:")
         print(f"{'token':<15} {'identificação':<30} {'tamanho':<10} {'posição (lin, col)':<15}")
         for token, tipo, length, position in tokens:
@@ -71,7 +74,8 @@ def main():
         for symbol, index in tabela_simbolos.items():
             print(f"{index:<10} {symbol:<10}")
     else:
-        print(f"Falha: O símbolo '{tokens}' não está registrado no alfabeto.")
+        _, valor = resultado
+        print(f"Token não identificado: {valor}")
 
 if __name__ == "__main__":
     main()
