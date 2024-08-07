@@ -6,9 +6,8 @@ def analisador_lexico(conteudo):
     lista_token = [
         ('Identificador', r'[ij]'),
         ('Reservado', r'\b(?:while|do)\b'),
-        ('Constante', r'\d{2,}'),
+        ('Constante', r'\d+'),
         ('Operador', r'[+\-*/%&|^!~<>=]'),
-        ('Numero', r'\d+(\.\d*)?'),
         ('String', r'\".*?\"'),
         ('Linha', r'\n'),
         ('Espaço', r'[ \t]+'),
@@ -41,7 +40,7 @@ def analisador_lexico(conteudo):
                 if valor not in tabela_simbolos:
                     tabela_simbolos[valor] = index
                     index += 1
-            elif tipo == 'Numero' or tipo == 'Constante':
+            elif tipo == 'Constante':
                 if valor not in tabela_simbolos:
                     tabela_simbolos[valor] = index
                     index += 1
